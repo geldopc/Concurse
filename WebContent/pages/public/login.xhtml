@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	#{bundle.nomeAplicacao}	
+</h:head>
+<h:body>
+	<ui:composition template="//templates/template-topdown.xhtml">   
+        <ui:define name="center">
+        	<p>#{bundle.nomeAplicacao}</p>
+    		<p:notificationBar position="top" effect="slide" widgetVar="bar" styleClass="top">  
+			    <h:outputText value="What PrimeFaces has so far is just the beginning!" style="color:#FFCC00;font-size:36px;" />  
+			</p:notificationBar> 
+
+			<p:commandButton value="Show" onclick="bar.show()" type="button" />  
+			<p:commandButton value="Hide" onclick="bar.hide()" type="button" /> 
+			<ui:remove>
+				<p:panel header="Mapa =D">
+					<p:gmap 
+						center="41.381542, 2.122893" 
+						zoom="15" 
+						type="HYBRID"   
+		        		style="width:1400px;height:600px" 
+		        		streetView="true"/> 
+	        	</p:panel>
+	        	<p:ajaxStatus onstart="statusDialog.show();" onsuccess="statusDialog.hide();"/>   
+			    <p:dialog 
+			    	modal="true" 
+			    	widgetVar="statusDialog" 
+			    	header="Status"   
+	       			draggable="false" 
+	       			closable="false"
+	       			resizable="false">  
+				    <p:graphicImage value="loader.gif"  library="images"/>  
+				</p:dialog>
+	        	 <h:form id="formLogin"> 
+		        	 <p:messages /> 
+				      <p:commandButton 
+				      	value="Submit" 
+				      	update="formLogin"
+				      	actionListener="#{authenticator.teste}"/>
+				</h:form>
+        	</ui:remove>
+        </ui:define>  
+    </ui:composition>
+</h:body>
+</html>

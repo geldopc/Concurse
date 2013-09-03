@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<f:view contentType="text/html">
+	<h:head>
+		<f:facet name="first">
+			<meta http-equiv="X-UA-Compatible" content="EmulateIE8" />
+			<meta content='text/html; charset=UTF-8' http-equiv="Content-Type" />
+			<h:outputStylesheet library="css" name="main.css" />
+			<title>#{bundle.nomeAplicacao}</title>
+		</f:facet>
+		<link type="text/css" 
+			  rel="stylesheet"
+			  href="#{request.contextPath}/css/default.css" />
+		<link type="text/css" 
+			  rel="stylesheet"
+			  href="#{request.contextPath}/css/syntaxhighlighter/syntaxhighlighter.css" />
+		<h:outputScript name="locale-primefaces.js" library="javascript" />
+		<link rel="shortcut icon" href="#{request.contextPath}/favicon.ico" type="image/x-icon"/>
+	</h:head>
+	<h:body>
+		#{authenticator.filtro()}
+		<ui:param name="fontStyle" value="font-family: Albertus Medium; font-weight: bold; color: #085098; font-size: 14px;"/>
+		<p:layout fullPage="true">
+			<p:layoutUnit 
+				position="north" 
+				size="50" 
+				resizable="true" 
+				collapsible="true">
+				<ui:include src="/templates/north.xhtml" />
+			</p:layoutUnit>
+
+			<p:layoutUnit 
+				position="south" 
+				size="35" 
+				resizable="true" 
+				collapsible="true">
+				<ui:include src="/templates/south.xhtml" />
+			</p:layoutUnit>
+
+			<p:layoutUnit 
+				position="west" 
+				size="200" 
+				header="Left"
+				resizable="true" 
+				collapsible="true">
+				<ui:include src="/templates/west.xhtml" />
+			</p:layoutUnit>
+
+			<p:layoutUnit 
+				position="east" 
+				size="200" 
+				header="Right"
+				resizable="true" 
+				collapsible="true">
+				<ui:include src="/templates/east.xhtml" />
+			</p:layoutUnit>
+
+			<p:layoutUnit 
+				id="pageBody"
+				position="center" 
+				styleClass="pageBody"> 
+				<ui:include src="/templates/Menu.xhtml"/>
+		        <ui:insert name="center" />   
+		    </p:layoutUnit>
+		</p:layout>
+	</h:body>
+</f:view>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"> 
+      
+<h:head>
+</h:head> 
+	<h:body>
+		<ui:param name="usuarioLogado" value="#{authenticator.usuarioLogado}"/>
+		<table 
+			id="linha" 
+			style="position: absolute; 
+				   margin-top: -15px; 
+				   vertical-align: middle;
+				   display: table-cell;">
+			<tr>
+				<table id="left" align="left">
+					<tr>
+						<td>
+							<h:graphicImage 
+								library="images" 
+								name="logoConcurse.png" 
+								width="40px"/>
+						</td>
+						<td>
+							<h:outputText 
+								value="#{bundle.nomeAplicacao}" 
+								style="font-family: Albertus Medium; 
+								       font-size: xx-large;
+								       font-weight: bold;
+								       color: #085098;"/>
+						</td>
+					</tr>
+				</table>
+				<table id="direita" align="right">
+					<h:form id="formNorth">
+						<p:growl id="msg"/>
+						<tr>
+							<td>
+								<h:outputLabel 
+									value="Login:" 
+									for="idLogin"
+									rendered="#{empty usuarioLogado}" 
+									style="#{fontStyle}"/>
+	            				<p:inputText 
+	            					id="idLogin" 
+	            					label="Login" 
+	            					value="#{authenticator.login}" 
+	            					maxlength="20" 
+	            					size="20"
+	            					rendered="#{empty usuarioLogado}" />
+							</td>
+							<td>
+								<h:outputLabel 
+									value="Senha:" 
+									for="idSenha"
+									rendered="#{empty usuarioLogado}" 
+									style="#{fontStyle}"/>
+	            				<p:password 
+	            					id="idSenha" 
+	            					label="Senha" 
+	            					value="#{authenticator.senha}" 
+	            					maxlength="10" 
+	            					size="20"
+	            					rendered="#{empty usuarioLogado}" />
+	            					
+	            				<h:outputLabel 
+	            					value="#{authenticator.usuarioLogado}"  
+									for="idSenha"
+									rendered="#{not empty usuarioLogado}" 
+									style="#{fontStyle}"/>
+							</td>
+							<td>
+								<p:commandButton
+									id="idLogar"
+									value="Logar"
+									actionListener="#{authenticator.logar()}"
+									icon="ui-icon-carat-1-e"
+									update="msg"
+									rendered="#{empty usuarioLogado}" 
+									style="#{fontStyle}"/>
+									       
+				 				<p:graphicImage 
+	            					value="#{authenticator.image}" 
+				 					id="image" 
+				 					cache="false"
+									rendered="#{not empty usuarioLogado}"
+				 					width="40px"
+				 					/>
+							</td>
+							<td>
+								<p:commandButton
+									id="idCadastrar"
+									value="Cadastre-se"
+									action="#{usuarioAction.newInstance()}"
+									onclick="modalCadastroUsuario.show();"
+									icon="ui-icon-extlink"
+									rendered="#{empty usuarioLogado}" 
+									style="#{fontStyle}"/>
+								<p:commandButton
+									id="idLogOut"
+									value="Sair"
+									action="#{authenticator.logOut()}"
+									icon="ui-icon-carat-1-w"
+									update="formNorth"
+									rendered="#{not empty usuarioLogado}" 
+									style="#{fontStyle}"/>
+							</td>
+						</tr>
+					</h:form>
+				</table>
+			</tr>
+		</table>
+		<p:dialog 
+			id="idModalCadastroUsuario" 
+			header="Cadastro de Usuário" 
+			widgetVar="modalCadastroUsuario"
+			resizable="false"
+			modal="true"
+			showEffect="puff" 
+			hideEffect="puff"
+			appendToBody="true">
+			<ui:include src="/pages/public/usuario/cadastroUsuario.xhtml"/>
+		</p:dialog>
+	</h:body>
+</html>

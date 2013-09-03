@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"> 
+      
+<h:head>
+</h:head> 
+	<h:body>
+		<table 
+			id="linha" 
+			style="position: absolute; 
+				   margin-top: -15px; 
+				   vertical-align: middle;
+				   display: table-cell;">
+			<tr>
+				<table id="left" align="left">
+					<tr>
+						<p:lightBox styleClass="imagebox">
+							<h:outputLink value="#{request.contextPath}/resources/images/bugkiller.jpg" title="bugkiller">
+								<td>
+									<h:outputText 
+										value="Bugkiller"
+										style="font-family: Albertus Medium; 
+										       font-size: 12px;
+										       font-weight: bold;
+										       color: #000000;"/>
+								</td>
+								<td>
+									<p:graphicImage 
+										library="images" 
+										name="bugkiller.jpg" 
+										width="20px"/>
+								</td>
+							</h:outputLink>
+							<td>
+								<h:outputText 
+									value="Rocksoft"
+									style="font-family: Albertus Medium; 
+									       font-size: 12px;
+									       font-weight: bold;
+									       color: #000000;"/>
+							</td>
+							<td>
+								<p:graphicImage 
+									library="images" 
+									name="logoRockSoft.png" 
+									width="20px"/>
+							</td>
+						</p:lightBox>
+					</tr>
+				</table>
+				<table id="direita" align="right">
+					<h:form>
+						<tr>
+							<td>
+								<p:clock/>
+							</td>
+						</tr>
+					</h:form>
+				</table>
+			</tr>
+		</table>
+	</h:body>
+</html>

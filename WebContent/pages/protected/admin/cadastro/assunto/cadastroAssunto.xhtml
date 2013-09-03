@@ -1,0 +1,132 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Usuário</title>
+</h:head>
+<h:body>
+	<h:form id="formAssunto">
+		<p:panel header="ASSUNTO">
+			<p:growl id="msg"/>
+			<p:panelGrid columns="2" style="width: 100%">
+				<h:outputLabel 
+					value="DESCRIÇÃO:" 
+					for="descricao" 
+					style="font-weight: bold;"/>
+				<p:inputText 
+					id="descricao" 
+					label="descricao"
+					value="#{assuntoAction.assunto.assunto}" 
+					maxlength="24" 
+					size="40" 
+					required="true"/>
+				<h:outputLabel 
+					value="ASSUNTO SUPERIOR:" 
+					for="assuntoSuperior" 
+					style="font-weight: bold;"/>
+				<p:selectOneMenu 
+					id="assuntoSuperiorCombo" 
+					value="#{assuntoAction.assuntoSuperior}" 
+					style="width:260px">  
+	                <f:selectItem 
+	                	itemLabel="Selecione..." 
+	                	itemValue=""/>  
+	                <f:selectItems 
+	                	value="#{assuntoAction.listAssuntos}"/>
+	                <f:converter 
+	                	converterId="assuntoConverter" 
+	                	for="assuntoSuperiorCombo"/>   
+	            </p:selectOneMenu>
+				<p:commandButton 
+					id="btCadastrarUsuario" 
+					value="SALVAR"
+					action="#{assuntoAction.cadastrarAssunto()}"
+					icon="ui-icon-circle-check"
+					update="formAssunto"
+					style="font-weight: bold;"/>
+				<p:commandButton 
+					id="btLimparFormUsuario" 
+					value="LIMPAR"
+					action="#{assuntoAction.newInstance()}"
+					immediate="true"
+					icon="ui-icon-circle-close"
+					update="formAssunto"
+					style="font-weight: bold;"
+					ajax="true">
+				</p:commandButton>
+			</p:panelGrid>
+			<p:dataTable 
+				id="assuntoList" 
+				var="row" 
+				value="#{assuntoAction.listAssuntos}" 
+				editable="true"
+				paginator="true" 
+				rows="10" 
+				sortOrder="#{row.assunto}">  
+		        <f:facet name="header">  
+		            <h:outputText value="Assuntos"/> 
+		        </f:facet>  
+		        <p:ajax 
+		        	event="rowEdit" 
+		        	listener="#{assuntoAction.onEdit}" 
+		        	update=":formAssunto:msg" />  
+		        <p:ajax 
+		        	event="rowEditCancel" 
+		        	listener="#{assuntoAction.onCancel}" 
+		        	update=":formAssunto:msg" />  
+		        <p:column 
+		        	headerText="Descrição" 
+		        	style="width:30%">  
+		            <p:cellEditor>  
+		                <f:facet name="output">  
+		                    <h:outputText 
+		                    	value="#{row.assunto}" />
+		                </f:facet>  
+		                <f:facet name="input">  
+		                    <p:inputText 
+		                    	value="#{row.assunto}" 
+		                    	style="width:100%"/>  
+		                </f:facet>  
+		            </p:cellEditor>  
+		        </p:column>  
+		        <p:column 
+		        	headerText="Assunto Superior" 
+		        	style="width:20%">  
+		            <p:cellEditor>  
+		                <f:facet name="output">  
+		                    <h:outputText 
+		                    	value="#{row.assuntoSuperior}"/>  
+		                </f:facet>  
+		                <f:facet name="input">  
+							<p:selectOneMenu 
+								id="assuntoSuperiorComboEdit" 
+								value="#{assuntoAction.assuntoSuperior}" 
+								style="width:260px">  
+				                <f:selectItem 
+				                	itemLabel="Selecione..." 
+				                	itemValue="" />  
+				                <f:selectItems 
+				                	value="#{assuntoAction.allAssuntos()}"/> 
+				                <f:converter 
+				                	converterId="assuntoConverter" 
+				                	for="assuntoSuperiorComboEdit"/>   
+	            			</p:selectOneMenu> 		                     
+		                </f:facet>  
+		            </p:cellEditor>  
+		        </p:column>  
+		        <p:column style="width:6%">  
+		            <p:rowEditor />  
+		        </p:column>  
+		        <f:facet name="footer">  
+		        	#{assuntoAction.listAssuntos.size()}
+		            <h:outputText value=" Assuntos encontrados"/> 
+		        </f:facet>
+		    </p:dataTable>
+		</p:panel>
+	</h:form>
+</h:body>
+</html>

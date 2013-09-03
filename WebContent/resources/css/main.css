@@ -1,0 +1,105 @@
+#topMessage {
+	vertical-align: middle;
+	display: table-cell;
+}
+
+html {
+	overflow: hidden;
+}
+
+body {
+	overflow: hidden;
+	padding: 0;
+	margin: 0;
+	width: 100%;
+	height: 100%;
+}
+
+h1 {
+	color: black;
+	vertical-align: middle;
+	display: table-cell;
+}
+
+h3{
+	vertical-align: middle;
+	display: table-cell;
+}
+
+h:outputLabel{
+	font-family: Albertus Medium; 
+    font-size: 12px;
+    font-weight: bold;
+    color: #085098;"
+}
+
+a:link,a:visited,a:hover,a:active {
+	color: black;	
+}
+
+.menuButton{
+	font-weight: bold;
+	font-size: 23px;
+	top:10px;
+	bottom: 10px;
+}
+
+#divTop {
+	padding: 0;
+	padding-left: 10px;
+	margin: 0;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	height: 50px;
+	overflow: hidden;
+	background: #dddddd;
+	border: 1px solid darkGray;	
+}
+
+#divLeft {
+	padding: 0;
+	padding-left: 10px;
+	margin: 0;
+	position: absolute;
+	top: 100px;
+	left: 10px;
+	bottom: 20px;
+	overflow: auto;
+	width: 250px;
+	border: thin solid lightGray;
+	background: #eeeeee;
+	font-size: 35px;
+}
+
+#divMain {
+	padding: 0;
+	padding-top: 10px;
+	margin: 0;
+	position: absolute;
+	top: 55px;
+	left: 0px;
+	right: 0px;
+	bottom: 20px;
+	overflow: auto;
+	border: thin solid lightGray;
+	background: #fefeef;
+}
+
+.ui-layout-north {
+	z-index: 20 !important;
+	overflow: visible !important;;
+}
+
+.ui-layout-north .ui-layout-unit-content {
+	overflow: visible !important;
+}
+
+.ui-widget {
+	font-size: 12px !important;
+}
+
+.ui-notificationbar {
+	z-index: 999;
+}

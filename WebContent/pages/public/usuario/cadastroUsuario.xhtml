@@ -1,0 +1,150 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Usuário</title>
+</h:head>
+<h:body>
+	<h:form id="formUsuario">
+		<p:panel header="Usuário">
+			<p:messages id="messages"/>
+			<p:panelGrid columns="2">
+				<h:outputLabel 
+					value="NOME:" 
+					for="nome" 
+					style="font-weight: bold;"/>
+				<p:inputText 
+					id="nome" 
+					label="nome"
+					value="#{usuarioAction.usuario.nome}" 
+					maxlength="24" 
+					size="40" 
+					required="true"/>
+				<h:outputLabel 
+					value="SOBRENOME:" 
+					for="sobrenome" 
+					style="font-weight: bold;"/>
+				<p:inputText 
+					id="sobrenome" 
+					label="sobrenome"
+					value="#{usuarioAction.usuario.sobrenome}" 
+					maxlength="14" 
+					size="40" 
+					required="true"/>
+				<h:outputLabel 
+					value="LOGIN:" 
+					for="login" 
+					style="font-weight: bold;" />
+				<p:inputText 
+					id="login" 
+					label="login"
+					value="#{usuarioAction.usuario.login}" 
+					maxlength="14" 
+					size="40" 
+					required="true"/>
+				<h:outputLabel 
+					value="SENHA:" 
+					for="senha" 
+					style="font-weight: bold;"/>
+				<p:password 
+					id="senha" 
+					label="senha"
+					value="#{usuarioAction.usuario.senha}" 
+					maxlength="14" 
+					size="40" 
+					required="true"/>
+				<h:outputLabel 
+					value="EMAIL:" 
+					for="email" 
+					style="font-weight: bold;"/>
+				<p:inputText 
+					id="email" 
+					label="email"
+					value="#{usuarioAction.usuario.email}" 
+					maxlength="100" 
+					size="40" 
+					required="true"
+					requiredMessage="E-mail inválido.">
+					<f:validateRegex 
+						pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" 
+						for="email"/>
+					<p:ajax 
+						update="msgEmail" 
+						event="keyup"/>
+					<p:message 
+						id="msgEmail" 
+						for="email"
+						showDetail="true"/>
+				</p:inputText>
+				<h:outputLabel 
+					value="DATA DE NASCIMENTO:" 
+					for="dataNascimento" 
+					style="font-weight: bold;"/>
+				<p:calendar
+					id="dataNascimento" 
+					locale="pt" 
+					showButtonPanel="true" 
+					navigator="true"
+					effect="explode"
+					size="40"
+					pattern="dd/MM/yyyy"
+					value="#{usuarioAction.usuario.dataNascimento}"
+					required="true"
+					requiredMessage="data de nascimento: é um campo obrigatório!"/>
+				<h:outputLabel 
+					value="IMAGEM:" 
+					for="imagem" 
+					rendered="#{empty usuarioAction.usuario.foto}"
+					style="font-weight: bold;"/>
+				<p:fileUpload  
+					sizeLimit="204800" 
+					auto="true" 
+					widgetVar="uploader" 
+					label="Procurar..."  
+					fileUploadListener="#{usuarioAction.downloadImg}"
+ 					allowTypes="/(\.|\/)(gif|jpe?g|png)$/" 
+ 					description="Images"
+ 					multiple="false" 
+ 					customUI="true"
+ 					update="formUsuario"
+ 					rendered="#{empty usuarioAction.usuario.foto}"
+ 					required="true"
+ 					requiredMessage="campo obrigatório"/>
+ 				<h:outputLabel 
+ 					value="FOTO:" 
+ 					for="imagem" 
+ 					rendered="#{not empty usuarioAction.usuario.foto}"
+ 					style="font-weight: bold;"/>
+ 				<p:graphicImage 
+ 					value="#{usuarioAction.imagem}" 
+ 					id="imagem" 
+ 					cache="false"
+ 					rendered="#{not empty usuarioAction.usuario.foto}"
+ 					width="80px"
+ 					style="font-weight: bold;"/>
+				<p:commandButton 
+					id="btCadastrarUsuario" 
+					value="SALVAR"
+					action="#{usuarioAction.createUsuario()}"
+					icon="ui-icon-circle-check"
+					update="formUsuario"
+					style="font-weight: bold;"/>
+				<p:commandButton 
+					id="btLimparFormUsuario" 
+					value="LIMPAR"
+					action="#{usuarioAction.newInstance()}"
+					immediate="true"
+					icon="ui-icon-circle-close"
+					update="formUsuario"
+					style="font-weight: bold;">
+					<p:ajax update="formUsuario"/>
+				</p:commandButton>
+			</p:panelGrid>
+		</p:panel>
+	</h:form>
+</h:body>
+</html>
