@@ -22,8 +22,8 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 
-import br.com.consurse.annotations.ChildList;
-import br.com.consurse.annotations.PathDescriptor;
+import br.com.concurse.annotations.ChildList;
+import br.com.concurse.annotations.PathDescriptor;
 
 @Entity
 @Table(name="tb_assunto")
