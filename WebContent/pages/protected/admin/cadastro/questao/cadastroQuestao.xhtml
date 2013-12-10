@@ -12,115 +12,99 @@
 	<h:form id="formQuestao">
 		<p:panel header="Questão">
 			<p:growl id="msg"/>
-			<p:panelGrid columns="2" style="width: 100%">
-				<h:outputLabel 
-					value="ASSUNTO:" 
-					for="assunto" 
-					style="font-weight: bold;"/>
-				<p:selectOneMenu 
-					id="assuntoCombo" 
-					value="#{assuntoAction.assuntoSuperior}" 
-					style="width:260px">  
-	                <f:selectItem 
-	                	itemLabel="Selecione..." 
-	                	itemValue=""/>  
-	                <f:selectItems 
-	                	value="#{assuntoAction.listAssuntos}"/>
-	                <f:converter 
-	                	converterId="assuntoConverter" 
-	                	for="assuntoCombo"/>   
-	            </p:selectOneMenu>
-	            <h:outputLabel 
-					value="PERGUNTA:" 
-					for="descricao" 
-					style="font-weight: bold;"/>
-				<p:inputTextarea 
-					id="descricao" 
-					label="descricao"
-					value="#{assuntoAction.assunto.assunto}" 
-					rows="5" 
-					cols="150" 
-					required="true"/> 
-				<h:outputLabel 
-					value="RESPOSTAS:" 
-					for="resposta" 
-					style="font-weight: bold;"/>
-				<p:dataTable 
-					var="row" 
-					value="#{questaoAction.respostasModel}"
-					selection="#{questaoAction.respostaCorreta}">
-					<f:facet name="header">
-						<p:toolbar id="tb">  
-						    <p:toolbarGroup align="left">  
-						        <p:commandButton 
-						        	type="button" 
-					        		value="Adicionar Resposta" 
-					        		icon="ui-icon-circle-plus" 
-					        		onclick="idModalAddResposta.show();"/>  
-						    </p:toolbarGroup>  
-						</p:toolbar>
-					</f:facet>  
-			        <p:column selectionMode="single" style="width:2%" /> 
-			        <p:column headerText="Assunto">  
-			            <h:outputText value="#{row}" />  
-			        </p:column>  
-			        <p:column headerText="Year">  
-			            <h:outputText value="#{row}" />  
-			        </p:column>  
-			        <p:column headerText="Manufacturer">  
-			            <h:outputText value="#{row.dataCadastro}" />  
-			        </p:column>
-			    </p:dataTable> 
+			<p:fieldset legend="Pergunta">
+				<p:panelGrid columns="2" style="width: 100%">
+					<h:outputLabel 
+						value="ASSUNTO:" 
+						for="assunto" 
+						style="font-weight: bold;"/>
+					<p:selectOneMenu 
+						id="assuntoCombo" 
+						required="true"
+						value="#{questaoAction.assunto}" 
+						style="width:260px">  
+		                <f:selectItem 
+		                	itemLabel="Selecione..." 
+		                	itemValue=""/>  
+		                <f:selectItems 
+		                	value="#{questaoAction.listAssuntos}"/>
+		                <f:converter 
+		                	converterId="assuntoConverter"
+		                	for="assuntoCombo"/>   
+		            </p:selectOneMenu>
+		            <h:outputLabel 
+						value="PERGUNTA:" 
+						for="descricao" 
+						style="font-weight: bold;"/>
+					<p:inputTextarea 
+						id="descricao" 
+						label="descricao"
+						required="true"
+						value="#{questaoAction.pergunta.pergunta}" 
+						rows="5" 
+						cols="150" />
+					</p:panelGrid> 
+				</p:fieldset>
+				
+				<p:fieldset legend="Respostas" id="fsRespostas"> 
+					<p:panelGrid columns="2" style="width: 100%" rendered="#{questaoAction.renderizaFormResposta()}">
+			            <h:outputLabel 
+							value="RESPOSTA:" 
+							for="resposta" 
+							style="font-weight: bold;"/>
+						<p:inputTextarea 
+							id="resposta" 
+							label="resposta"
+							value="#{questaoAction.resposta.resposta}" 
+							rows="5" 
+							cols="100" /> 
+						 <p:commandButton 
+							id="btInserirResposta" 
+							value="Adicionar Resposta"
+							action="#{questaoAction.adicionarResposta()}"
+							icon="ui-icon-circle-check"
+							update="fsRespostas idRespostas"
+							style="font-weight: bold;"/>
+			        	<p:commandButton 
+							id="btLimparResposta" 
+							value="Limpar Resposta"
+							action="#{questaoAction.limparResposta()}"
+							icon="ui-icon-circle-check"
+							update="fsRespostas idRespostas"
+							style="font-weight: bold;"/>
+					</p:panelGrid>
+					
+					<p:dataTable 
+						id="idRespostas"
+						var="row" 
+						value="#{questaoAction.respostaModel}"
+						selection="#{questaoAction.respostaCorreta}"> 
+						<p:column 
+							headerText="Resposta Correta"
+							selectionMode="single" 
+							style="width: 2%"/>
+				        <p:column headerText="Resposta">  
+				            <h:outputText value="#{row}" />  
+				        </p:column>  
+				    </p:dataTable>
+				    
+				</p:fieldset>
+				 
 				<p:commandButton 
-					id="btCadastrarUsuario" 
+					id="btCadastrarPergunta" 
 					value="SALVAR"
-					action="#{assuntoAction.cadastrarAssunto()}"
+					action="#{questaoAction.cadastrarPergunta()}"
 					icon="ui-icon-circle-check"
 					update="formQuestao"
 					style="font-weight: bold;"/>
 				<p:commandButton 
-					id="btLimparFormUsuario" 
+					id="btLimparQuestao" 
 					value="LIMPAR"
-					action="#{assuntoAction.newInstance()}"
-					immediate="true"
-					icon="ui-icon-circle-close"
+					action="#{questaoAction.newInstance()}"
+					icon="ui-icon-circle-check"
 					update="formQuestao"
-					style="font-weight: bold;"
-					ajax="true">
-				</p:commandButton>
-			</p:panelGrid>
-		</p:panel>
-		<p:dialog 
-			id="idModalAddResposta" 
-			header="Cadastro de Usuário" 
-			widgetVar="idModalAddResposta"
-			resizable="false"
-			modal="true"
-			showEffect="puff" 
-			hideEffect="puff"
-			appendToBody="true">
-			<p:panelGrid columns="2" style="width: 100%">
-	            <h:outputLabel 
-					value="RESPOSTA:" 
-					for="resposta" 
 					style="font-weight: bold;"/>
-				<p:inputTextarea 
-					id="resposta" 
-					label="resposta"
-					value="#{assuntoAction.assunto.assunto}" 
-					rows="5" 
-					cols="100" 
-					required="true"/> 
-				 <p:commandButton 
-		        	type="button" 
-	        		value="Adicionar Resposta" 
-	        		icon="ui-icon-circle-plus"/>
-	        	<p:commandButton 
-		        	type="button" 
-	        		value="Limpar" 
-	        		icon="ui-icon-circle-plus"/>
-			</p:panelGrid>
-		</p:dialog>
+		</p:panel>
 	</h:form>
 </h:body>
 </html>

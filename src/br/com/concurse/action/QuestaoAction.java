@@ -7,7 +7,7 @@ import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import org.apache.log4j.Logger;
@@ -18,8 +18,11 @@ import br.com.concurse.entity.Assunto;
 import br.com.concurse.entity.Pergunta;
 import br.com.concurse.entity.Resposta;
 import br.com.concurse.manager.AssuntoManager;
+import br.com.concurse.manager.PerguntaManager;
+import br.com.concurse.manager.RespostaManager;
+import br.com.concurse.util.JSFMessageUtil;
 
-@SessionScoped
+@ViewScoped
 @ManagedBean(name = QuestaoAction.NAME)
 public class QuestaoAction extends AbstractAction implements Serializable{
 
@@ -29,36 +32,72 @@ public class QuestaoAction extends AbstractAction implements Serializable{
 	private Logger log = Logger.getLogger(QuestaoAction.class);
 	
 	private AssuntoManager assuntoManager;
+	private PerguntaManager perguntaManager;
+	private RespostaManager respostaManager;
 	private Assunto assunto;
-	private Pergunta pergunta;
-	private Resposta resposta;
+	private Pergunta pergunta = new Pergunta();
+	private Resposta resposta = new Resposta();
 	private Resposta respostaCorreta;
+	private List<Resposta> respostas;
 	private Assunto assuntoSuperior;
-	private RespostaDataModel respostasModel;
+	private RespostaDataModel respostaModel;
 	private List<Assunto> listAssuntos = new ArrayList<Assunto>();
 	
-	public void cadastrarAssunto() {
-        try {
-        	assunto.setDataCadastro(new Date());
-        	assunto.setAssuntoSuperior(assuntoSuperior);
-        	getAssuntoManager().createAssunto(assunto);
-        	listAssuntos.add(assunto);
-            closeDialog();
-            displayInfoMessageToUser("Assunto criado com sucesso!");
-            log.info("Assunto criado com sucesso!");
-            newInstance();
-        } catch (Exception e) {
-            keepDialogOpen();
-            displayErrorMessageToUser("Não foi possível cadastrar o assunto");
-            log.info("Não foi possível cadastrar o assunto!");
-            e.printStackTrace();
-        }
-    }
+	public QuestaoAction() {
+		respostaModel = new RespostaDataModel(respostas);
+	}
+	
+	public void cadastrarPergunta(){
+		if (this.respostaCorreta != null) {
+			log.info(pergunta);
+			for (int i = 0; i < respostas.size() - 1; i++) {
+				log.info(respostas.get(i));
+			}
+			addRespostaCorreta(respostas);
+			gravarRespostas(gravarPergunta(), respostas);
+			newInstance();
+			JSFMessageUtil messageUtil = new JSFMessageUtil();
+			messageUtil.sendInfoMessageToUser("Questão Cadastrada com Sucesso.");
+		}else{
+			JSFMessageUtil messageUtil = new JSFMessageUtil();
+			messageUtil.sendErrorMessageToUser("Selecione a resposta correta.");
+		}
+	}
+	
+	private void addRespostaCorreta(List<Resposta> ListResp) {
+		for (Resposta resposta : ListResp) {
+			if (resposta.getResposta().equals(this.respostaCorreta.getResposta())) {
+				resposta.setRespostaCorreta(true);
+			}else{
+				resposta.setRespostaCorreta(false);
+			}
+		}
+	}
+
+	private Pergunta gravarPergunta(){
+		pergunta.setIdAssunto(assunto);
+		pergunta.setDataCadastro(new Date());
+		getPerguntaManager().createPergunta(pergunta);
+		return pergunta;
+	}
+	
+	private void gravarRespostas(Pergunta pergunta, List<Resposta> respostas){
+		for (Resposta resposta : respostas) {
+			resposta.setIdPergunta(pergunta);
+			getRespostaManager().createResposta(resposta);
+		}
+	}
 	
 	public void newInstance(){
 		new QuestaoAction();
 		assunto = new Assunto();
-		assuntoSuperior = new Assunto();
+		pergunta = new Pergunta();
+		respostaCorreta = null;
+		respostas.clear();
+	}
+	
+	public void limparResposta(){
+		resposta.setResposta(null);
 	}
 	
 	public List<Assunto> allAssuntos(){
@@ -70,6 +109,25 @@ public class QuestaoAction extends AbstractAction implements Serializable{
 			assuntoManager = new AssuntoManager();
 		}
 		return assuntoManager;
+	}
+	
+	public void adicionarResposta(){
+		if (this.respostas == null) {
+			respostas = new ArrayList<Resposta>(5);
+			respostas.add(new Resposta(resposta));
+			resposta.setResposta(null);
+		}else{
+			respostas.add(new Resposta(resposta));
+			resposta.setResposta(null);
+		}
+		respostaModel = new RespostaDataModel(respostas);
+	}
+	
+	public boolean renderizaFormResposta(){
+		if (respostas != null) {
+			return respostas.size() < 5;
+		}
+		return true;
 	}
 
 	public void onEdit(RowEditEvent event) {
@@ -137,19 +195,49 @@ public class QuestaoAction extends AbstractAction implements Serializable{
 		this.listAssuntos = listAssuntos;
 	}
 
-	public RespostaDataModel getRespostasModel() {
-		return respostasModel;
-	}
-
-	public void setRespostasModel(RespostaDataModel respostasModel) {
-		this.respostasModel = respostasModel;
-	}
-
 	public Resposta getRespostaCorreta() {
 		return respostaCorreta;
 	}
 
 	public void setRespostaCorreta(Resposta respostaCorreta) {
 		this.respostaCorreta = respostaCorreta;
+	}
+
+	public List<Resposta> getRespostas() {
+		return respostas;
+	}
+
+	public void setRespostas(List<Resposta> respostas) {
+		this.respostas = respostas;
+	}
+
+	public PerguntaManager getPerguntaManager() {
+		if (perguntaManager == null) {
+			return new PerguntaManager();
+		}
+		return perguntaManager;
+	}
+
+	public void setPerguntaManager(PerguntaManager perguntaManager) {
+		this.perguntaManager = perguntaManager;
+	}
+
+	public RespostaManager getRespostaManager() {
+		if (respostaManager == null) {
+			return new RespostaManager();
+		}
+		return respostaManager;
+	}
+
+	public void setRespostaManager(RespostaManager respostaManager) {
+		this.respostaManager = respostaManager;
+	}
+
+	public RespostaDataModel getRespostaModel() {
+		return respostaModel;
+	}
+
+	public void setRespostaModel(RespostaDataModel respostaModel) {
+		this.respostaModel = respostaModel;
 	}
 }

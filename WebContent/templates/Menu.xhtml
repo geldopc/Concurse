@@ -18,13 +18,15 @@
 	
 	      <p:submenu label="Simulado" icon="ui-icon-pencil">  
 	          <p:menuitem 
-	          	value="Gerar Simulado por Assunto" 
-	          	url="/Simulado/View.jsf" 
-	          	icon="ui-icon-arrowreturnthick-1-w" />  
-	          <p:menuitem 
-	          	value="Gerar Simulado Radômico" 
-	          	url="#" 
-	          	icon="ui-icon-arrowreturnthick-1-e" />  
+	          	value="Gerar Simulado" 
+	          	url="/pages/protected/user/simulado/view.xhtml" 
+	          	icon="ui-icon-note" /> 
+	          <ui:remove> 
+		          <p:menuitem 
+		          	value="Gerar Simulado Radômico" 
+		          	url="#" 
+		          	icon="ui-icon-arrowreturnthick-1-e" />
+		      </ui:remove>    	  
 	      </p:submenu>  
 	
 	      <p:submenu label="Help" icon="ui-icon-help">  

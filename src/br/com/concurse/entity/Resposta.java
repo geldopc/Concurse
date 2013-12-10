@@ -24,6 +24,16 @@ public class Resposta implements Serializable {
 	private String resposta;
 	private Boolean respostaCorreta;
 	
+	public Resposta() {
+	}
+	
+	public Resposta(Resposta resposta) {
+		this.idResposta = resposta.idResposta;
+		this.idPergunta = resposta.idPergunta;
+		this.resposta = resposta.resposta;
+		this.respostaCorreta = resposta.respostaCorreta;
+	}
+	
 	@SequenceGenerator(name = "TB_RESPOSTA_GENERATOR", sequenceName = "sq_tb_resposta")
 	@Id
 	@GeneratedValue(generator="TB_RESPOSTA_GENERATOR")
