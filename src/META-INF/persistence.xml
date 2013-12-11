@@ -8,7 +8,9 @@
 
 	<persistence-unit name="Concurse" transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
-
+<!-- 		<class>br.com.concurse.entity.Usuario</class> -->
+<!-- 		<class>br.com.concurse.entity.Pergunta</class> -->
+<!-- 		<class>br.com.concurse.entity.Resposta</class>  -->
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
 			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/db_concurse" />

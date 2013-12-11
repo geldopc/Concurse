@@ -5,16 +5,41 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
 
-	<!-- 
-		Replace path to template, title, header and body
-		with actual data.
-	 -->
 	<ui:composition template="/templates/template-master.xhtml">
 			<ui:define name="pageTitle">Simulado</ui:define>
 			<ui:define name="pageHeader">Simulado</ui:define>
 			<ui:define name="center">
-			 	<p:clock/>
+			 	<p:fieldset legend="Simulado">
+					<h:form id="formSimulado">
+						<p:panelGrid columns="2" style="width: 100%">
+							<h:outputLabel 
+								value="ASSUNTO:" 
+								for="assunto" 
+								style="font-weight: bold;"/>
+							<p:selectOneMenu 
+								id="assuntoCombo" 
+								required="true"
+								value="#{simuladoAction.assunto}" 
+								style="width:260px">  
+				                <f:selectItem 
+				                	itemLabel="Selecione..." 
+				                	itemValue=""/>  
+				                <f:selectItems 
+				                	value="#{simuladoAction.listAssuntos}"/>
+				                <f:converter 
+				                	converterId="assuntoConverter"
+				                	for="assuntoCombo"/>   
+				            </p:selectOneMenu>
+				            <p:commandButton 
+								id="btGerarSimulado" 
+								value="Gerar Simulado"
+								action="#{simuladoAction.gerarSimulado()}"
+								icon="ui-icon-circle-check"
+								style="font-weight: bold;"
+								update="formSimulado"/>
+						</p:panelGrid> 
+					</h:form>
+				</p:fieldset>
 			</ui:define>
 	</ui:composition>
-
 </html>

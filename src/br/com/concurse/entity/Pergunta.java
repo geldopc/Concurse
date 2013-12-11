@@ -1,5 +1,6 @@
 package br.com.concurse.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -17,7 +18,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="tb_pergunta")
-public class Pergunta implements java.io.Serializable {
+public class Pergunta implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
