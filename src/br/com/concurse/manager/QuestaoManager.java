@@ -57,8 +57,10 @@ public class QuestaoManager implements Serializable{
 		List<QuestaoBean> questoes = new ArrayList<QuestaoBean>();
 		QuestaoBean questao = null;
 		List<Pergunta> listPerg = perguntaDAO.obterPerguntas(idAssunto);
+		int num = 0;
     	for (Pergunta pergunta : listPerg) {
 			questao = new QuestaoBean();
+			questao.setNumQuestao(++num);
 			questao.setPergunta(pergunta);
 			questao.getRespostas().addAll(respostaDAO.obterRespostas(pergunta.getIdPergunta()));
 			questoes.add(questao);

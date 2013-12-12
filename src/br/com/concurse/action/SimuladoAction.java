@@ -37,6 +37,13 @@ public class SimuladoAction extends AbstractAction implements Serializable{
 		questoes.addAll(getQuestaoManager().gerarSimulado(this.assunto.getIdAssunto()));
 	}
 	
+	public boolean renderizaSimulado(){
+		if (questoes != null) {
+			return questoes.size() > 0;
+		}
+		return false;
+	}
+	
 	public void newInstance(){
 		new SimuladoAction();
 		assunto = new Assunto();

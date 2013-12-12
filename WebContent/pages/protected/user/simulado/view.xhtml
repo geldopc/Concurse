@@ -11,7 +11,7 @@
 			<ui:define name="center">
 			 	<p:fieldset legend="Simulado">
 					<h:form id="formSimulado">
-						<p:panelGrid columns="2" style="width: 100%">
+						<p:panelGrid columns="3" style="width: 100%">
 							<h:outputLabel 
 								value="ASSUNTO:" 
 								for="assunto" 
@@ -36,8 +36,47 @@
 								action="#{simuladoAction.gerarSimulado()}"
 								icon="ui-icon-circle-check"
 								style="font-weight: bold;"
-								update="formSimulado"/>
+								update="formSimulado, questoesSimulado, painelQuestoes"/>
 						</p:panelGrid> 
+						<p:panel 
+							id="painelQuestoes" 
+							header="Questões" 
+							rendered="#{simuladoAction.renderizaSimulado()}">
+							<p:accordionPanel 
+								id="questoesSimulado"
+								rendered="true"
+								value="#{simuladoAction.questoes}" 
+								var="q" 
+								multiple="true">
+								<p:tab title="#{q.numQuestao}º Questão">
+									<p:dataTable 
+										id="idRespostas"
+										var="row" 
+										value="#{q.respostaModel}"
+										selection="#{q.respostaCorreta}" > 
+										<f:facet name="header">  
+								            #{q.pergunta} 
+								        </f:facet>  
+										<p:column 
+											headerText="Resposta Correta"
+											selectionMode="single" 
+											style="width: 2%"/>
+								        <p:column headerText="Resposta">  
+								            <h:outputText value="#{row.resposta}" />  
+								        </p:column>  
+								        
+								    </p:dataTable>
+									
+								</p:tab>
+							</p:accordionPanel>
+							<p:commandButton 
+								id="btGravarSimulado" 
+								value="Gravar Simulado"
+								action="#{simuladoAction.gerarSimulado()}"
+								icon="ui-icon-circle-check"
+								style="font-weight: bold;"
+								update="formSimulado"/>
+						</p:panel>
 					</h:form>
 				</p:fieldset>
 			</ui:define>

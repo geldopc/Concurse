@@ -64,6 +64,8 @@ public class QuestaoAction extends AbstractAction implements Serializable{
 		}
 	}
 	
+	
+	
 	private void addRespostaCorreta(List<Resposta> ListResp) {
 		for (Resposta resposta : ListResp) {
 			if (resposta.getResposta().equals(this.respostaCorreta.getResposta())) {
