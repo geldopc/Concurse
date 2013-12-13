@@ -12,25 +12,24 @@
 <h:body>
 	<ui:composition template="//templates/template-master.xhtml">
         <ui:define name="center">
-        	
-    		<p:notificationBar position="top" effect="slide" widgetVar="bar" styleClass="top">  
-			    <h:outputText value="What PrimeFaces has so far is just the beginning!" style="color:#FFCC00;font-size:36px;" />  
-			</p:notificationBar>  
-			<h:form id="formIndex">
-				<p:commandButton value="Show" onclick="bar.show()" type="button" />  
-				<p:commandButton value="Hide" onclick="bar.hide()" type="button" /> 
-			</h:form> 
 			<ui:remove>
-			<p:dock position="top">  
-			    <p:menuitem value="Home" icon="/images/dock/home.png" url="#"/>  
-			    <p:menuitem value="Music" icon="/images/dock/music.png" url="#"/>  
-			    <p:menuitem value="Video" icon="/images/dock/video.png" url="#"/>  
-			    <p:menuitem value="Email" icon="/images/dock/email.png" url="#"/>  
-			    <p:menuitem value="Portfolio" icon="/images/dock/portfolio.png" url="#"/>  
-			    <p:menuitem value="Link" icon="/images/dock/link.png" url="#"/>  
-			    <p:menuitem value="RSS" icon="/images/dock/rss.png" url="#"/>  
-			    <p:menuitem value="History" icon="/images/dock/history.png" url="#"/>  
-			</p:dock> 
+	    		<p:notificationBar position="top" effect="slide" widgetVar="bar" styleClass="top">  
+				    <h:outputText value="What PrimeFaces has so far is just the beginning!" style="color:#FFCC00;font-size:36px;" />  
+				</p:notificationBar>  
+				<h:form id="formIndex">
+					<p:commandButton value="Show" onclick="bar.show()" type="button" />  
+					<p:commandButton value="Hide" onclick="bar.hide()" type="button" /> 
+				</h:form> 
+				<p:dock position="top">  
+				    <p:menuitem value="Home" icon="/images/dock/home.png" url="#"/>  
+				    <p:menuitem value="Music" icon="/images/dock/music.png" url="#"/>  
+				    <p:menuitem value="Video" icon="/images/dock/video.png" url="#"/>  
+				    <p:menuitem value="Email" icon="/images/dock/email.png" url="#"/>  
+				    <p:menuitem value="Portfolio" icon="/images/dock/portfolio.png" url="#"/>  
+				    <p:menuitem value="Link" icon="/images/dock/link.png" url="#"/>  
+				    <p:menuitem value="RSS" icon="/images/dock/rss.png" url="#"/>  
+				    <p:menuitem value="History" icon="/images/dock/history.png" url="#"/>  
+				</p:dock> 
 			</ui:remove>
         </ui:define>  
     </ui:composition>

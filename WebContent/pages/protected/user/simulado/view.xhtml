@@ -41,7 +41,7 @@
 						<p:panel 
 							id="painelQuestoes" 
 							header="Questões" 
-							rendered="#{simuladoAction.renderizaSimulado()}">
+							rendered="#{simuladoAction.renderizaSimulado() and not simuladoAction.exibeResultado}">
 							<p:accordionPanel 
 								id="questoesSimulado"
 								rendered="true"
@@ -71,8 +71,52 @@
 							</p:accordionPanel>
 							<p:commandButton 
 								id="btGravarSimulado" 
+								value="Corrigir Simulado"
+								action="#{simuladoAction.corrigirSimulado()}"
+								icon="ui-icon-circle-check"
+								style="font-weight: bold;"
+								update="painelResultadoQuestoes, formSimulado"/>
+						</p:panel>
+						
+						<p:panel 
+							id="painelResultadoQuestoes" 
+							header="Resultado Simulado" 
+							rendered="#{simuladoAction.exibeResultado}">
+							<p:accordionPanel 
+								id="resultadoSimulado"
+								rendered="true"
+								value="#{simuladoAction.questoes}" 
+								var="q" 
+								multiple="true">
+								<p:tab title="#{q.numQuestao}º Questão">
+									<p:outputLabel value="#{q.respostas.get(0).respostaCorreta ? 'Acertou!' : 'Errou!'}"/><br/><br/>
+									<p:outputLabel value="Resposta Correta: #{q.respostas.get(3)}"/>
+									
+									
+									<ui:remove>
+										<p:dataTable 
+											id="idRespostas"
+											var="row" 
+											value="#{q.respostaModel}"
+											selection="#{q.respostaCorreta}" > 
+											<f:facet name="header">  
+									            #{q.pergunta} 
+									        </f:facet>  
+											<p:column 
+												headerText="Resposta Correta"
+												selectionMode="single" 
+												style="width: 2%"/>
+									        <p:column headerText="Resposta">  
+									            <h:outputText value="#{row.resposta}" />  
+									        </p:column>  
+									    </p:dataTable>
+									</ui:remove>
+								</p:tab>
+							</p:accordionPanel>
+							<p:commandButton 
+								id="btVoltarSimulado" 
 								value="Gravar Simulado"
-								action="#{simuladoAction.gerarSimulado()}"
+								action="#{simuladoAction.gravarSimulado()}"
 								icon="ui-icon-circle-check"
 								style="font-weight: bold;"
 								update="formSimulado"/>

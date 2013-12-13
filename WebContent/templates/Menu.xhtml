@@ -10,15 +10,16 @@
 	 	<p:growl id="messages"/>
 		<p:menubar rendered="#{authenticator.user}">  
 	      <p:submenu label="Cadastrar" icon="ui-icon-document">
-		      <p:menuitem value="Assunto" url="/pages/protected/admin/cadastro/assunto/view.xhtml"/>  
+		      <p:menuitem value="Assunto" url="/pages/protected/admin/cadastro/assunto/view.xhtml"/> 
+		      <ui:remove>  
 		      <p:menuitem value="Usuário" url="/pages/public/usuario/cadastroUsuario.xhtml" />  
 		      <p:menuitem value="Listar Usuários" url="/Usuario/List.jsf" />  
+		      </ui:remove>
 		      <p:menuitem value="Questões" url="/pages/protected/admin/cadastro/questao/view.xhtml"/>  
           </p:submenu>  
 	
 	      <p:submenu label="Simulado" icon="ui-icon-pencil">  
 	          <p:menuitem 
-
 	          	value="Gerar Simulado" 
 	          	url="/pages/protected/user/simulado/view.xhtml" 
 	          	icon="ui-icon-note" /> 
@@ -28,17 +29,16 @@
 		          	url="#" 
 		          	icon="ui-icon-arrowreturnthick-1-e" />
 		      </ui:remove>    	  
-
-	          	value="Gerar Simulado por Assunto" 
-	          	url="/Simulado/View.jsf" 
-	          	icon="ui-icon-arrowreturnthick-1-w" />  
+	      </p:submenu> 
+	      
+	      <p:submenu label="Estatistica" icon="ui-icon-document">  
 	          <p:menuitem 
-	          	value="Gerar Simulado Radômico" 
-	          	url="#" 
-	          	icon="ui-icon-arrowreturnthick-1-e" />  
-
+	          	value="Por Assunto" 
+	          	url="/pages/protected/user/estatistica/view.xhtml" 
+	          	icon="ui-icon-note" /> 
 	      </p:submenu>  
-	
+	      
+		<ui:remove> 
 	      <p:submenu label="Help" icon="ui-icon-help">  
 	          <p:menuitem value="Contents" url="#" />  
 	          <p:submenu label="Search" icon="ui-icon-search">  
@@ -60,6 +60,7 @@
 	      </p:submenu>  
 	
 	      <p:menuitem value="Quit" url="http://www.primefaces.org" icon="ui-icon-close" />  
+	    </ui:remove>
 	  	</p:menubar>
     </h:form>
    </f:view>  

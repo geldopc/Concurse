@@ -21,16 +21,17 @@ import br.com.concurse.manager.UsuarioManager;
 import br.com.concurse.type.RoleEnum;
 
 @ApplicationScoped
-@ManagedBean
+@ManagedBean(name="authenticator")
 public class Authenticator extends AbstractFilter implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private Logger log = Logger.getLogger(Authenticator.class);
-	private Usuario usuarioLogado;
+	public Usuario usuarioLogado;
 	private String login;
 	private String senha;
 	private static final String EXTENSION = "png";
 	private String image;
+	
 	public Usuario getUsuarioLogado() {
 		return usuarioLogado;
 	}
